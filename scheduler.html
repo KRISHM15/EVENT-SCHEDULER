@@ -7,12 +7,13 @@
 
 <script type="text/javascript">
 var graphData = []
+// calling the api to load json data
 $(document).ready(function(){
     $.ajax({url: "https://totalcloud-static.s3.amazonaws.com/intern.json", success: function(result){
-        console.log(result);
+       
         
         dateFormat = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep']
-        console.log("Date",  new Date(1789, 3, 30))
+     //iterating through each data in the result
         for(i=0;i<result.length;i++) {
             $('#myTable tbody').append('<tr><td>'+i+'</td><td>'+result[i].name+'</td><td>'+result[i].start+'</td><td>'+result[i].end+'</td></tr>');
             var newStartDate = result[i].start.replace("/", "-");
@@ -26,7 +27,7 @@ $(document).ready(function(){
             tempEndDate = newEndDate.split('-')
             tempEndDate[1] = dateFormat[tempEndDate[1]-1]
             newEndDate = tempEndDate.join('-')
-
+        //creating data for chart
             graphData.push([
                 result[i].name, 'Not Available', new Date(newStartDate) , new Date(newEndDate)
             ])
@@ -50,7 +51,7 @@ $(document).ready(function(){
       var options = {
         timeline: { colorByRowLabel: true }
       };
-  
+  //portraing of chart
       chart.draw(dataTable, options);
     }
     });
